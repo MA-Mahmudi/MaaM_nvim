@@ -15,7 +15,7 @@ return {
       require("telescope").load_extension("fzf")
       local keymap = vim.keymap
 
-      keymap.set("n", "<space>fd", require("telescope.builtin").find_files)
+      keymap.set("n", "<space>fd", require("telescope.builtin").git_files)
       keymap.set("n", "<space>fh", require("telescope.builtin").help_tags)
       keymap.set("n", "<space>en", function()
         require("telescope.builtin").find_files {

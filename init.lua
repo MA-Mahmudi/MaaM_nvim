@@ -6,6 +6,7 @@ local keymap = vim.keymap
 vim.g.mapleader = " " --leader is space
 
 keymap.set("n", "<leader>pv", "<cmd>Ex<CR>")
-vim.keymap.set("n", "<leader><leader>", function()
+keymap.set("n", "<leader><leader>", function()
   vim.cmd("so")
 end)
+keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true })
