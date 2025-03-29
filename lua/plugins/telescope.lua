@@ -24,7 +24,7 @@ return {
       end)
       vim.keymap.set("n", "<space>ep", function()
         require('telescope.builtin').find_files {
-          cwd = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy")
+          cwd = vim.fs.joinpath(tostring(vim.fn.stdpath("data")), "lazy")
         }
       end)
 
