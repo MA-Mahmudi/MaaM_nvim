@@ -10,6 +10,4 @@ opt.colorcolumn = "0"
 opt.scrolloff = 8
 
 keymap.set("n", "<leader>pv", "<cmd>Ex<CR>")
-keymap.set("n", "<leader><leader>", function()
-  vim.cmd("so")
-end)
+keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true })
