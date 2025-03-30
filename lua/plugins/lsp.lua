@@ -87,7 +87,7 @@ return {
           end,
           ["ts_ls"] = function()
             lspconfig.ts_ls.setup {
-              filetypes = { "ts", "js" },
+              filetypes = { "typescript", "javascript" },
               capabilities = capabilities,
             }
           end,
