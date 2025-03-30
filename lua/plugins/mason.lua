@@ -1,6 +1,4 @@
 return {
   "williamboman/mason.nvim",
-  "williamboman/mason-lspconfig.nvim",
-
-  config = function() end
+  dependencies = { "williamboman/mason-lspconfig.nvim" },
 }
