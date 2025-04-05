@@ -24,6 +24,13 @@ return {
       { "<leader>fg", desc = "Live multi grep" },
       { "<leader>p",  group = "Ex" },
       { "<leader>pv", desc = "Explore" },
+      { "<leader>h",  group = "Harpoon" },
+      { "<leader>hq", desc = "Add buffer" },
+      { "<leader>ha", desc = "Select buffer 1" },
+      { "<leader>hs", desc = "Select buffer 2" },
+      { "<leader>hd", desc = "Select buffer 3" },
+      { "<leader>hf", desc = "Select buffer 4" },
+      { "<leader>hg", desc = "Show buffers list" },
     })
   end
 }
