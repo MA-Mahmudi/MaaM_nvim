@@ -58,7 +58,7 @@ return {
 
       require("mason").setup()
       require("mason-lspconfig").setup({
-        ensure_installed = { "ts_ls", "html", "gopls", "volar" },
+        ensure_installed = { "ts_ls", "html", "gopls", "volar", "tailwindcss" },
         automatic_installation = false,
         handlers = {
           default_setup,
@@ -76,13 +76,19 @@ return {
           end,
           ["volar"] = function()
             lspconfig.volar.setup {
-              filetypes = { "vue" },
+              filetypes = { "vue", "typescript", "javascript" },
               capabilities = capabilities,
             }
           end,
-          ["ts_ls"] = function()
-            lspconfig.ts_ls.setup {
-              filetypes = { "typescript", "javascript" },
+          -- ["ts_ls"] = function()
+          --   lspconfig.ts_ls.setup {
+          --     filetypes = { "typescript", "javascript" },
+          --     capabilities = capabilities,
+          --   }
+          -- end,
+          ["tailwindcss"] = function()
+            lspconfig.tailwindcss.setup {
+              filetypes = { "typescript", "javascript", "html", "css", "vue" },
               capabilities = capabilities,
             }
           end,
