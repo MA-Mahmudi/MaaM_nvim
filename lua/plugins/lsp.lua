@@ -25,7 +25,7 @@ return {
           map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
 
           local client = vim.lsp.get_client_by_id(event.data.client_id)
-          if client and client.server_capabilities.documentHighlightProvider then
+          if client and client.server_capabilities.documentHighlightProvider and not vim.bo.filetype == "vue" then
             vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
               buffer = event.buf,
               callback = vim.lsp.buf.document_highlight,
@@ -58,7 +58,7 @@ return {
 
       require("mason").setup()
       require("mason-lspconfig").setup({
-        ensure_installed = { "ts_ls", "html", "gopls", "volar", "tailwindcss" },
+        ensure_installed = { "ts_ls", "html", "gopls", "volar", "tailwindcss", "cssls" },
         automatic_installation = false,
         handlers = {
           default_setup,
@@ -80,15 +80,30 @@ return {
               capabilities = capabilities,
             }
           end,
-          -- ["ts_ls"] = function()
-          --   lspconfig.ts_ls.setup {
-          --     filetypes = { "typescript", "javascript" },
-          --     capabilities = capabilities,
-          --   }
-          -- end,
+          ["ts_ls"] = function()
+            lspconfig.ts_ls.setup {
+              filetypes = { "vue", "typescript", "javascript" },
+              capabilities = capabilities,
+              init_options = {
+                plugins = {
+                  {
+                    name = '@vue/typescript-plugin',
+                    location = vim.fn.stdpath 'data' .. '/mason/packages/vue-language-server/node_modules/@vue/language-server',
+                    languages = { 'vue' },
+                  },
+                },
+              },
+            }
+          end,
           ["tailwindcss"] = function()
             lspconfig.tailwindcss.setup {
               filetypes = { "typescript", "javascript", "html", "css", "vue" },
+              capabilities = capabilities,
+            }
+          end,
+          ["cssls"] = function()
+            lspconfig.cssls.setup {
+              filetypes = { "html", "css", "vue" },
               capabilities = capabilities,
             }
           end,
