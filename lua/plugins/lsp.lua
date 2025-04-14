@@ -25,7 +25,7 @@ return {
           map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
 
           local client = vim.lsp.get_client_by_id(event.data.client_id)
-          if client and client.server_capabilities.documentHighlightProvider and not vim.bo.filetype == "vue" then
+          if client and client.server_capabilities.documentHighlightProvider and vim.bo.filetype ~= "vue" then
             vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
               buffer = event.buf,
               callback = vim.lsp.buf.document_highlight,
