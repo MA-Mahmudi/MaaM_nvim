@@ -10,7 +10,12 @@ return {
       require("telescope").setup {
         extensions = {
           fzf = {}
-        }
+        },
+        -- pickers = {
+        --   find_files = {
+        --     theme = "ivy"
+        --   }
+        -- }
       }
       require("telescope").load_extension("fzf")
       local keymap = vim.keymap
