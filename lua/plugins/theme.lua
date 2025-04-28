@@ -1,7 +1,7 @@
 return {
-  "luisiacc/gruvbox-baby",
+  "ellisonleao/gruvbox.nvim",
   config = function()
-    vim.cmd("colorscheme gruvbox-baby")
+    vim.cmd("colorscheme gruvbox")
     vim.api.nvim_set_hl(0, "LineNr", { fg = "#ff7373" })
     vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#805957" })
     vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#805957" })
