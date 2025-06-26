@@ -66,13 +66,13 @@ return {
 
       require("mason").setup()
       require("mason-lspconfig").setup({
-        ensure_installed = { "ts_ls", "html", "gopls", "volar", "tailwindcss", "cssls" },
+        ensure_installed = { "ts_ls", "html", "gopls", "vue_ls", "tailwindcss", "cssls", "intelephense", "phpactor" },
         automatic_installation = false,
         handlers = {
           default_setup,
           ["html"] = function()
             lspconfig.html.setup {
-              filetypes = { "html" },
+              filetypes = { "html", "blade" },
               capabilities = capabilities,
             }
           end,
@@ -82,9 +82,9 @@ return {
               capabilities = capabilities,
             }
           end,
-          ["volar"] = function()
-            lspconfig.volar.setup {
-              filetypes = { "vue", "typescript", "javascript" },
+          ["vue_ls"] = function()
+            lspconfig.vue_ls.setup {
+              filetypes = { "vue" },
               capabilities = capabilities,
             }
           end,
@@ -105,13 +105,19 @@ return {
           end,
           ["tailwindcss"] = function()
             lspconfig.tailwindcss.setup {
-              filetypes = { "typescript", "javascript", "html", "css", "vue" },
+              filetypes = { "html", "css", "vue" },
               capabilities = capabilities,
             }
           end,
           ["cssls"] = function()
             lspconfig.cssls.setup {
               filetypes = { "html", "css", "vue" },
+              capabilities = capabilities,
+            }
+          end,
+          ["intelephense"] = function()
+            lspconfig.intelephense.setup {
+              filetypes = { "php", "blade" },
               capabilities = capabilities,
             }
           end,
