@@ -1,6 +1,6 @@
 local keymap = vim.keymap
 
-keymap.set("n", "<leader>pv", "<cmd>Ex<CR>")
+keymap.set("n", "<leader>pv", "<cmd>Oil<CR>")
 keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true })
 
 -- next greatest remap ever: asbjornHaland
