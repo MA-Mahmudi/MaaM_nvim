@@ -58,6 +58,9 @@ return {
           end
         end
       })
+
+      vim.lsp.enable('laravel_ls')
+
       local default_setup = function(server)
         require("lspconfig")[server].setup({
           capabilities = capabilities,
