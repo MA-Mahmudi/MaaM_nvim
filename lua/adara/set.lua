@@ -7,3 +7,4 @@ opt.scrolloff = 8
 opt.updatetime = 100
 opt.number = true
 opt.relativenumber = true
+opt.termguicolors = true
