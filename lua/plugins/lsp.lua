@@ -60,15 +60,15 @@ return {
             })
 
             local default_setup = function(server)
-                require("lspconfig")[server].setup({
+                lspconfig[server].setup({
                     capabilities = capabilities,
                 })
             end
 
             require("mason").setup()
             require("mason-lspconfig").setup({
-                ensure_installed = { "ts_ls", "html", "gopls", "vue_ls", "tailwindcss", "cssls", "intelephense", "phpactor", "bashls", "laravel_ls" },
-                automatic_installation = false,
+                ensure_installed = { "ts_ls", "html", "gopls", "vue_ls", "tailwindcss", "cssls", "intelephense", "phpactor", "bashls", "laravel_ls", "lua_ls" },
+                automatic_installation = true,
                 handlers = {
                     default_setup,
                     ["html"] = function()
@@ -91,7 +91,7 @@ return {
                     end,
                     ["ts_ls"] = function()
                         lspconfig.ts_ls.setup {
-                            filetypes = { "vue", "typescript", "javascript", "blade", "php" },
+                            filetypes = { "vue", "typescript", "javascript" },
                             capabilities = capabilities,
                             init_options = {
                                 plugins = {
@@ -106,7 +106,7 @@ return {
                     end,
                     ["tailwindcss"] = function()
                         lspconfig.tailwindcss.setup {
-                            filetypes = { "html", "css", "vue" },
+                            filetypes = { "html", "css", "vue", "blade" },
                             capabilities = capabilities,
                         }
                     end,
@@ -134,7 +134,17 @@ return {
                             filetypes = { "php", "laravel" },
                             capabilities = capabilities,
                         }
-                    end
+                    end,
+                    ['phpactor'] = function()
+                        lspconfig.phpactor.setup {
+                            init_options = {
+                                ["language_server.diagnostic_providers"] = {},
+                                ["language_server_worse_reflection.diagnostics.enable"] = false,
+                                ["language_server_worse_reflection.inlay_hints.enable"] = true,
+                                ["language_server_worse_reflection.inlay_hints.types"] = false,
+                            },
+                        }
+                    end,
                 }
             })
         end,
