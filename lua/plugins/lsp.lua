@@ -13,7 +13,6 @@ return {
             },
         },
         config = function()
-            local lspconfig = require('lspconfig')
             local capabilities = require('blink.cmp').get_lsp_capabilities()
 
             vim.diagnostic.config({
@@ -59,93 +58,123 @@ return {
                 end
             })
 
-            local default_setup = function(server)
-                lspconfig[server].setup({
-                    capabilities = capabilities,
-                })
-            end
+            local vue_language_server_path = vim.fn.stdpath 'data' ..
+                '/mason/packages/vue-language-server/node_modules/@vue/language-server'
+            local tsserver_filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' }
+            local vue_plugin = {
+                name = '@vue/typescript-plugin',
+                location = vue_language_server_path,
+                languages = { 'vue' },
+                configNamespace = 'typescript',
+            }
 
             require("mason").setup()
             require("mason-lspconfig").setup({
-                ensure_installed = { "ts_ls", "html", "gopls", "vue_ls", "tailwindcss", "cssls", "intelephense", "phpactor", "bashls", "laravel_ls", "lua_ls" },
+                ensure_installed = { "ts_ls", "html", "gopls", "vue_ls", "tailwindcss", "cssls", "intelephense", "phpactor", "bashls", "laravel_ls", "lua_ls", "vtsls" },
                 automatic_installation = true,
-                handlers = {
-                    default_setup,
-                    ["html"] = function()
-                        lspconfig.html.setup {
-                            filetypes = { "html", "blade" },
-                            capabilities = capabilities,
-                        }
+                vim.lsp.config("vue_ls", {
+                    capabilities = capabilities,
+                    cmd = { 'vue-language-server', '--stdio' },
+                    filetypes = { 'vue' },
+                    root_markers = { 'package.json', 'bun.lock' },
+                    on_init = function(client)
+                        client.handlers['tsserver/request'] = function(_, result, context)
+                            local ts_clients = vim.lsp.get_clients({ bufnr = context.bufnr, name = 'ts_ls' })
+                            local vtsls_clients = vim.lsp.get_clients({ bufnr = context.bufnr, name = 'vtsls' })
+                            local clients = {}
+
+                            vim.list_extend(clients, vtsls_clients)
+                            vim.list_extend(clients, ts_clients)
+
+                            if #clients == 0 then
+                                vim.notify(
+                                    'Could not find `vtsls` or `ts_ls` lsp client, `vue_ls` would not work without it.',
+                                    vim.log.levels.ERROR)
+                                return
+                            end
+                            local ts_client = clients[1]
+
+                            local param = unpack(result)
+                            local id, command, payload = unpack(param)
+                            ts_client:exec_cmd({
+                                title = 'vue_request_forward', -- You can give title anything as it's used to represent a command in the UI, `:h Client:exec_cmd`
+                                command = 'typescript.tsserverRequest',
+                                arguments = {
+                                    command,
+                                    payload,
+                                },
+                            }, { bufnr = context.bufnr }, function(_, r)
+                                local response = r and r.body
+                                -- TODO: handle error or response nil here, e.g. logging
+                                -- NOTE: Do NOT return if there's an error or no response, just return nil back to the vue_ls to prevent memory leak
+                                local response_data = { { id, response } }
+
+                                ---@diagnostic disable-next-line: param-type-mismatch
+                                client:notify('tsserver/response', response_data)
+                            end)
+                        end
                     end,
-                    ["gopls"] = function()
-                        lspconfig.gopls.setup {
-                            filetypes = { "go", "gomod", "gowork", "gotmpl" },
-                            capabilities = capabilities,
-                        }
-                    end,
-                    ["vue_ls"] = function()
-                        lspconfig.vue_ls.setup {
-                            filetypes = { "vue" },
-                            capabilities = capabilities,
-                        }
-                    end,
-                    ["ts_ls"] = function()
-                        lspconfig.ts_ls.setup {
-                            filetypes = { "vue", "typescript", "javascript" },
-                            capabilities = capabilities,
-                            init_options = {
-                                plugins = {
-                                    {
-                                        name = '@vue/typescript-plugin',
-                                        location = vim.fn.stdpath 'data' .. '/mason/packages/vue-language-server/node_modules/@vue/language-server',
-                                        languages = { 'vue' },
-                                    },
+                }),
+                vim.lsp.config("html", {
+                    filetypes = { "html", "blade" },
+                    capabilities = capabilities,
+                }),
+                vim.lsp.config("gopls", {
+                    filetypes = { "go", "gomod", "gowork", "gotmpl" },
+                    capabilities = capabilities,
+                }),
+                vim.lsp.config("vtsls", {
+                    capabilities = capabilities,
+                    settings = {
+                        vtsls = {
+                            tsserver = {
+                                globalPlugins = {
+                                    vue_plugin,
                                 },
                             },
-                        }
-                    end,
-                    ["tailwindcss"] = function()
-                        lspconfig.tailwindcss.setup {
-                            filetypes = { "html", "css", "vue", "blade" },
-                            capabilities = capabilities,
-                        }
-                    end,
-                    ["cssls"] = function()
-                        lspconfig.cssls.setup {
-                            filetypes = { "html", "css", "vue", "blade" },
-                            capabilities = capabilities,
-                        }
-                    end,
-                    ["intelephense"] = function()
-                        lspconfig.intelephense.setup {
-                            filetypes = { "php", "blade" },
-                            capabilities = capabilities,
-                        }
-                    end,
-                    ["bashls"] = function()
-                        lspconfig.bashls.setup {
-                            cmd = { 'bash-language-server', 'start' },
-                            filetypes = { "bash", "sh" },
-                            capabilities = capabilities,
-                        }
-                    end,
-                    ["laravel_ls"] = function()
-                        lspconfig.laravel_ls.setup {
-                            filetypes = { "php", "laravel" },
-                            capabilities = capabilities,
-                        }
-                    end,
-                    ['phpactor'] = function()
-                        lspconfig.phpactor.setup {
-                            init_options = {
-                                ["language_server.diagnostic_providers"] = {},
-                                ["language_server_worse_reflection.diagnostics.enable"] = false,
-                                ["language_server_worse_reflection.inlay_hints.enable"] = true,
-                                ["language_server_worse_reflection.inlay_hints.types"] = false,
-                            },
-                        }
-                    end,
-                }
+                        },
+                    },
+                    filetypes = tsserver_filetypes,
+                    init_options = { hostInfo = "neovim" },
+                }),
+                vim.lsp.config("ts_ls", {
+                    capabilities = capabilities,
+                    init_options = {
+                        plugins = {
+                            vue_plugin,
+                        },
+                    },
+                    filetypes = tsserver_filetypes,
+                }),
+                vim.lsp.config("tailwindcss", {
+                    filetypes = { "html", "css", "vue", "blade" },
+                    capabilities = capabilities,
+                }),
+                vim.lsp.config("cssls", {
+                    filetypes = { "html", "css", "vue", "blade" },
+                    capabilities = capabilities,
+                }),
+                vim.lsp.config("intelephense", {
+                    filetypes = { "php", "blade" },
+                    capabilities = capabilities,
+                }),
+                vim.lsp.config("bashls", {
+                    cmd = { 'bash-language-server', 'start' },
+                    filetypes = { "bash", "sh" },
+                    capabilities = capabilities,
+                }),
+                vim.lsp.config("laravel_ls", {
+                    filetypes = { "php", "laravel" },
+                    capabilities = capabilities,
+                }),
+                vim.lsp.config("phpactor", {
+                    init_options = {
+                        ["language_server.diagnostic_providers"] = {},
+                        ["language_server_worse_reflection.diagnostics.enable"] = false,
+                        ["language_server_worse_reflection.inlay_hints.enable"] = true,
+                        ["language_server_worse_reflection.inlay_hints.types"] = false,
+                    },
+                }),
             })
         end,
     }
