@@ -5,7 +5,7 @@ return {
             require 'alpha'.setup(require 'alpha.themes.dashboard'.config)
             local dashboard = require 'alpha.themes.dashboard'
             dashboard.section.buttons.val = {
-                dashboard.button("e", "  Explore", ":Oil<CR>"),
+                dashboard.button("e", "󰉋  Explore", ":Oil<CR>"),
                 dashboard.button("n", "  New file", ":ene <BAR> startinsert <CR>"),
                 dashboard.button("q", "󰅚  Quit NVIM", ":qa<CR>"),
             }
