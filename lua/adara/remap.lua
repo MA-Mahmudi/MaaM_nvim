@@ -1,8 +1,18 @@
 local keymap = vim.keymap
 
 keymap.set("n", "<leader>pv", "<cmd>Oil<CR>")
+keymap.set("n", "<leader><leader>", function()
+    local cwd = vim.fn.stdpath("config")
+    local current = vim.fn.getcwd()
+    if string.find(current, cwd) then
+        return "<cmd>source %<CR>"
+    end
+end
+)
 keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true })
-keymap.set("n", "<leader><leader>", "<cmd>source %<CR>")
+keymap.set("t", "<Esc><Esc>", "<C-\\><C-n><cmd>q<CR>", { noremap = true })
+keymap.set("i", "jj", "<C-c>")
+keymap.set("i", "kk", "<C-c>")
 
 -- next greatest remap ever: asbjornHaland
 keymap.set({ "n", "v" }, "<leader>ys", [["+y]])
