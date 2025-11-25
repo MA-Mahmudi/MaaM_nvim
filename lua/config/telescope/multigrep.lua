@@ -1,5 +1,6 @@
 local pickers = require "telescope.pickers"
 local finders = require "telescope.finders"
+local themes = require "telescope.themes"
 local make_entry = require "telescope.make_entry"
 local conf = require "telescope.config".values
 
@@ -40,6 +41,9 @@ local live_multigrep = function(opts)
     pickers.new(opts, {
         debounce = 1000,
         prompt_title = "Multi Grep",
+        find_files = {
+            theme = "ivy"
+        },
         finder = finder,
         previewer = conf.grep_previewer(opts),
         sorter = require("telescope.sorters").empty(),
@@ -47,6 +51,13 @@ local live_multigrep = function(opts)
 end
 
 M.setup = function()
+    -- local opts = {
+    --     pickers = {
+    --         find_files = {
+    --             theme = "ivy"
+    --         }
+    --     }
+    -- }
     vim.keymap.set("n", "<leader>fg", live_multigrep)
 end
 

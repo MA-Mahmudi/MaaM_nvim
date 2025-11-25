@@ -17,10 +17,7 @@ return {
 
             vim.diagnostic.config({
                 virtual_text = true, -- This enables inline diagnostics
-                signs = true,        -- Shows signs in the gutter
-                underline = true,
-                update_in_insert = false,
-                float = true
+                update_in_insert = true,
             })
 
             vim.api.nvim_create_autocmd('LspAttach', {
@@ -30,6 +27,7 @@ return {
                     end
 
                     map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+                    map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
 
                     local client = vim.lsp.get_client_by_id(event.data.client_id)
                     if client and client.server_capabilities.documentHighlightProvider and vim.bo.filetype ~= "vue" then
