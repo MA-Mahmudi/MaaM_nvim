@@ -25,13 +25,13 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
 -- Setup lazy.nvim
+-- require("lazy").setup("plugins")
 require("lazy").setup({
     spec = {
         { import = "plugins" },
     },
-    change_detection = {
-        -- automatically check for config file changes and reload the ui
-        enabled = false,
-        notify = true, -- get a notification when changes are found
+    checker = {
+        enabled = true,
+        notify = true
     },
 })
