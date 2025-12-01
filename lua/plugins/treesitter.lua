@@ -36,7 +36,8 @@ return {
                         end
                     end,
                 },
-                sync_install = false
+                sync_install = false,
+                indent = { enable = true },
             }
         end,
     }

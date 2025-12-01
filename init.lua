@@ -1,3 +1,5 @@
 require("adara")
 require("config.lazy")
-require("lazy").setup("plugins")
+-- require("lazy").setup("plugins")
+--
+vim.opt.autoindent = true
