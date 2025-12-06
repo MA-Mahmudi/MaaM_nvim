@@ -15,11 +15,6 @@ return {
         config = function()
             local capabilities = require('blink.cmp').get_lsp_capabilities()
 
-            vim.diagnostic.config({
-                virtual_text = true, -- This enables inline diagnostics
-                update_in_insert = true,
-            })
-
             vim.api.nvim_create_autocmd('LspAttach', {
                 callback = function(event)
                     local map = function(keys, func, desc)

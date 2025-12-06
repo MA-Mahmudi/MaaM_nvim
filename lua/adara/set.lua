@@ -14,3 +14,14 @@ opt.shiftwidth = 4   -- auto-indentation
 opt.expandtab = true -- replace tabs with spaces
 opt.breakindent = true
 -- vim.o.updatetime = 100
+
+-- If you want icons for diagnostic errors, you'll need to define them somewhere:
+vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
+vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
+vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
+vim.fn.sign_define("DiagnosticSignHint", { text = "󰌵", texthl = "DiagnosticSignHint" })
+
+vim.diagnostic.config({
+    virtual_text = true, -- This enables inline diagnostics
+    update_in_insert = true,
+})
