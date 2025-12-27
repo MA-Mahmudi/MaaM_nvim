@@ -5,7 +5,6 @@ return {
             "nvim-lua/plenary.nvim",
             "nvim-treesitter/nvim-treesitter",
         },
-        notify = false,
         opts = {
             opts = {
                 log_level = "DEBUG", -- or "TRACE"

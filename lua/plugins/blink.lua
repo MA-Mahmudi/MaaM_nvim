@@ -6,11 +6,22 @@ return {
         { "echasnovski/mini.icons", opts = {} }
     },
 
-    version = '1.*',
+    version = '1.7.*',
 
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
+        cmdline = {
+            enabled = true,
+            completion = {
+                ghost_text = {
+                    enabled = true,
+                },
+                menu = {
+                    auto_show = true
+                },
+            }
+        },
         -- See :h blink-cmp-config-keymap for defining your own keymap
         keymap = { preset = 'default' },
 
@@ -18,7 +29,12 @@ return {
             nerd_font_variant = 'mono'
         },
 
-        completion = { documentation = { auto_show = true } },
+        completion = {
+            documentation = { auto_show = true },
+            menu = {
+                auto_show_delay_ms = 0,
+            }
+        },
 
         sources = {
             -- default = { 'lsp', 'path', 'snippets', 'buffer' },

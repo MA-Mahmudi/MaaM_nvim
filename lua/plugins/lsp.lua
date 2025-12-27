@@ -63,7 +63,20 @@ return {
 
             require("mason").setup()
             require("mason-lspconfig").setup({
-                ensure_installed = { "ts_ls", "html", "gopls", "vue_ls", "tailwindcss", "cssls", "intelephense", "bashls", "laravel_ls", "lua_ls", "vtsls", "docker_language_server" },
+                ensure_installed = {
+                    "ts_ls",
+                    "html",
+                    "gopls",
+                    "vue_ls",
+                    "tailwindcss",
+                    "cssls",
+                    "intelephense",
+                    "bashls",
+                    -- "laravel_ls",
+                    "lua_ls",
+                    "vtsls",
+                    "docker_language_server"
+                },
                 automatic_installation = true,
                 vim.lsp.config("vue_ls", {
                     capabilities = capabilities,
@@ -156,10 +169,10 @@ return {
                     filetypes = { "bash", "sh" },
                     capabilities = capabilities,
                 }),
-                vim.lsp.config("laravel_ls", {
-                    filetypes = { "php", "blade" },
-                    capabilities = capabilities,
-                }),
+                -- vim.lsp.config("laravel_ls", {
+                --     filetypes = { "php", "blade" },
+                --     capabilities = capabilities,
+                -- }),
             })
         end,
     }

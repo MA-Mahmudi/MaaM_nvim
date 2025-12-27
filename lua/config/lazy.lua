@@ -34,4 +34,42 @@ require("lazy").setup({
         enabled = true,
         notify = true
     },
+    ui = {
+        pills = true,
+        icons = {
+            cmd = " ",
+            config = "",
+            debug = "● ",
+            event = " ",
+            favorite = " ",
+            ft = " ",
+            init = " ",
+            import = " ",
+            keys = " ",
+            lazy = "󰒲 ",
+            loaded = "●",
+            not_loaded = "○",
+            plugin = " ",
+            runtime = " ",
+            require = "󰢱 ",
+            source = " ",
+            start = " ",
+            task = "✔ ",
+            list = {
+                "●",
+                "➜",
+                "★",
+                "‒",
+            },
+        }
+    },
+    change_detection = {
+        enabled = true,
+        notify = true,
+    },
+    performance = {
+        cache = {
+            enabled = true
+        }
+    }
 })

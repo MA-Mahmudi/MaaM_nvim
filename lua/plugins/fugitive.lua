@@ -5,7 +5,7 @@ return {
         vim.keymap.set("n", "<leader>gf", function()
             vim.cmd.Git()
             vim.cmd.wincmd("H")
-            vim.api.nvim_win_set_width(0, 40)
+            vim.api.nvim_win_set_width(0, 55)
         end)
     end
 }
