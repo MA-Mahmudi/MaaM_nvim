@@ -30,10 +30,6 @@ require("lazy").setup({
     spec = {
         { import = "plugins" },
     },
-    checker = {
-        enabled = true,
-        notify = true
-    },
     ui = {
         pills = true,
         icons = {
@@ -62,10 +58,6 @@ require("lazy").setup({
                 "‒",
             },
         }
-    },
-    change_detection = {
-        enabled = true,
-        notify = true,
     },
     performance = {
         cache = {
