@@ -12,9 +12,9 @@ return {
                     fzf = {}
                 },
                 pickers = {
-                    find_files = {
-                        theme = "ivy"
-                    }
+                    -- find_files = {
+                    --     -- theme = "ivy"
+                    -- }
                 }
             }
             require("telescope").load_extension("fzf")

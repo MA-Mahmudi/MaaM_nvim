@@ -10,6 +10,8 @@ return {
         local languages = {
             "python",
             "php",
+            "blade",
+            "vue",
             "go",
             "c",
             "cpp",
@@ -34,14 +36,19 @@ return {
             pattern = languages,
             callback = function(args)
                 pcall(vim.treesitter.start, args.buf)
-                vim.bo[args.buf].syntax = "off"
+                vim.bo[args.buf].syntax = "on"
             end,
         })
 
         -- Folding
-        vim.opt.foldmethod = "expr"
-        vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+        -- vim.opt.foldmethod = "expr"
+        -- vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+        vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+        vim.wo[0][0].foldmethod = 'expr'
         vim.opt.foldlevel = 99
+
+        -- Indents
+        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 
         -- Optional: safe indentation fallback (no dependency)
         vim.api.nvim_create_autocmd("FileType", {
@@ -49,10 +56,10 @@ return {
             pattern = languages,
             callback = function(args)
                 -- Only set if no indentexpr already exists
-                if vim.bo[args.buf].indentexpr == "" then
-                    vim.bo[args.buf].autoindent = true
-                    vim.bo[args.buf].smartindent = true
-                end
+                -- if vim.bo[args.buf].indentexpr == "" then
+                vim.bo[args.buf].autoindent = true
+                vim.bo[args.buf].smartindent = true
+                -- end
             end,
         })
     end,
