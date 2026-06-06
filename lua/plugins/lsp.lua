@@ -88,8 +88,8 @@ return {
                             local vtsls_clients = vim.lsp.get_clients({ bufnr = context.bufnr, name = 'vtsls' })
                             local clients = {}
 
-                            vim.list_extend(clients, vtsls_clients)
                             vim.list_extend(clients, ts_clients)
+                            vim.list_extend(clients, vtsls_clients)
 
                             if #clients == 0 then
                                 vim.notify(
@@ -128,20 +128,20 @@ return {
                     filetypes = { "go", "gomod", "gowork", "gotmpl" },
                     capabilities = capabilities,
                 }),
-                vim.lsp.config("vtsls", {
-                    capabilities = capabilities,
-                    settings = {
-                        vtsls = {
-                            tsserver = {
-                                globalPlugins = {
-                                    vue_plugin,
-                                },
-                            },
-                        },
-                    },
-                    filetypes = tsserver_filetypes,
-                    init_options = { hostInfo = "neovim" },
-                }),
+                -- vim.lsp.config("vtsls", {
+                --     capabilities = capabilities,
+                --     settings = {
+                --         vtsls = {
+                --             tsserver = {
+                --                 globalPlugins = {
+                --                     vue_plugin,
+                --                 },
+                --             },
+                --         },
+                --     },
+                --     filetypes = tsserver_filetypes,
+                --     init_options = { hostInfo = "neovim" },
+                -- }),
                 vim.lsp.config("ts_ls", {
                     capabilities = capabilities,
                     init_options = {
@@ -221,6 +221,7 @@ return {
                         Lua = {},
                     },
                 }),
+                -- vim.lsp.enable({ 'ts_ls', 'vue_ls' }) -- If using `ts_ls` replace `vtsls` to `ts_ls`
                 -- vim.lsp.config("laravel_ls", {
                 --     filetypes = { "php", "blade" },
                 --     capabilities = capabilities,
