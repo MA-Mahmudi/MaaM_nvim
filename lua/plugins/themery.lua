@@ -1,9 +1,14 @@
+local afterGlobal = function()
+    vim.api.nvim_set_hl(0, "LineNr", { fg = "#ff7373" })
+    vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#805957" })
+    vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#805957" })
+    vim.api.nvim_set_hl(0, "signColumn", { bg = "none" })
+end
 return {
     "zaldih/themery.nvim",
     lazy = false,
     config = function()
         require("themery").setup({
-            -- themes = { "tokyonight", "rose-pine", "dracula" },
             themes = {
                 {
                     name = "rose-pine",
@@ -65,14 +70,17 @@ return {
                     name = "Dracula",
                     colorscheme = "dracula",
                 },
+                {
+                    name = "Tundra",
+                    colorscheme = "tundra",
+                },
+                {
+                    name = "Gruvbox Material",
+                    colorscheme = "gruvbox-material",
+                },
             },
             livePreview = true,
-            globalAfter = [[
-                        vim.api.nvim_set_hl(0, "LineNr", { fg = "#ff7373" }),
-                        vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#805957" }),
-                        vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#805957" }),
-                        vim.api.nvim_set_hl(0, "signColumn", { bg = "none" }),
-            ]]
+            globalAfter = afterGlobal()
         })
     end
 }

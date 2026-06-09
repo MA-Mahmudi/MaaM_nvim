@@ -6,4 +6,6 @@ return {
     "catppuccin/nvim",
     "morhetz/gruvbox",
     "EdenEast/nightfox.nvim",
+    "sam4llis/nvim-tundra",
+    "sainnhe/gruvbox-material",
 }
