@@ -25,8 +25,8 @@ return {
             sections = {
                 lualine_a = { 'mode' },
                 lualine_b = { 'branch', 'diff', 'diagnostics' },
-                lualine_c = { 'filepath', 'filename' },
-                lualine_x = { 'fileformat', 'filetype' },
+                lualine_c = { 'harpoon2' },
+                lualine_x = { 'fileformat', 'filetype', "filename" },
                 lualine_y = { 'progress' },
                 lualine_z = { 'location' }
             },
