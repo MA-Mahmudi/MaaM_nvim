@@ -73,7 +73,7 @@ return {
                     "bashls",
                     -- "laravel_ls",
                     "lua_ls",
-                    "vtsls",
+                    -- "vtsls",
                     "docker_language_server"
                 },
                 automatic_installation = true,
@@ -152,7 +152,7 @@ return {
                     filetypes = tsserver_filetypes,
                 }),
                 vim.lsp.config("tailwindcss", {
-                    filetypes = { "html", "css", "vue", "blade" },
+                    filetypes = { "html", "css", "vue", "blade", "javascriptreact", "typescriptreact" },
                     capabilities = capabilities,
                 }),
                 vim.lsp.config("cssls", {
